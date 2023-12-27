@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="JPWMII_9" />
+        <module name="JPWMII_Final" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="JPWMII_9" target="16" />
+    </bytecodeTargetLevel>
   </component>
 </project>
