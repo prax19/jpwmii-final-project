@@ -41,7 +41,7 @@ public class Background {
     }
 
     public void render(GraphicsContext gContext) {
-        gContext.setFill(Color.rgb(40, 35, 35, 1));
+        gContext.setFill(Color.rgb(1, 11, 15, 1));
         gContext.fillRect(0, 0, context.getScreenWidth(), context.getScreenHeight());
     }
 
