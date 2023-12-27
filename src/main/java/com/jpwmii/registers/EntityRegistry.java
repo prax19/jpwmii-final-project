@@ -1,0 +1,42 @@
+package com.jpwmii.registers;
+
+import com.jpwmii.Game;
+import com.jpwmii.entities.Bullet;
+import com.jpwmii.entities.Entity;
+
+import java.util.Objects;
+
+public class EntityRegistry extends Registry<Entity>{
+
+    public EntityRegistry(Game context) {
+        super(context);
+    }
+
+    @Override
+    public void update() {
+        for(int i = 0; i < this.size(); i++) {
+            Entity entity = this.get(i);
+            for(Entity entity2: this)
+                if(     !Objects.equals(entity, entity2) &&
+                        entity.hasCollisionWith(entity2))  {
+                    if(!(entity instanceof Bullet)) {
+                        if(entity2 instanceof Bullet) {
+                            if (((Bullet) entity2).getSource() != entity) {
+                                entity.collide(entity2);
+                                entity2.collide(entity);
+                            }
+                        } else {
+                            entity.collide(entity2);
+                            entity2.collide(entity);
+                        }
+                    }
+                }
+
+            entity.update(1/60.0);
+            entity.render(getContext().getGraphicsContext());
+            if(entity.isRemoved()) {
+                this.unregister(entity);
+            }
+        }
+    }
+}
