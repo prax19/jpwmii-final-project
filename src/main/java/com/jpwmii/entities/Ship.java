@@ -129,7 +129,6 @@ public class Ship extends Entity {
     public void render(GraphicsContext gContext) {
         super.render(gContext);
         if(getContext().isDeveloperModeEnabled()) {
-            gContext.save();
 
             String stateInfo;
             if(!isDestroyed())
@@ -148,8 +147,6 @@ public class Ship extends Entity {
                     getSprite().position.x + getSprite().getCurrentImage().getWidth() / 2,
                     getSprite().position.y
             );
-
-            gContext.restore();
         }
 
     }

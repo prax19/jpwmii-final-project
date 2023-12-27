@@ -1,6 +1,7 @@
 package com.jpwmii;
 
 import com.jpwmii.ai.AI;
+import com.jpwmii.background.Background;
 import com.jpwmii.entities.Ship;
 import com.jpwmii.registers.AIRegistry;
 import com.jpwmii.registers.EntityRegistry;
@@ -43,8 +44,11 @@ public class Game extends Application {
     private int frameTimeIndex = 0 ;
     private boolean arrayFilled = false;
     private Stage STAGE;
+    private Scene SCENE;
     private final GraphicsContext gContext;
     private Ship ship;
+
+    private Background background;
 
     public Game() {
         PROPERTIES = loadProperties("config.properties");
@@ -54,19 +58,19 @@ public class Game extends Application {
         screenHeight = Double.parseDouble(PROPERTIES.get("game.defaults.screen.height"));
 
         this.ROOT = new BorderPane();
-        Scene SCENE = new Scene(ROOT);
+        this.SCENE = new Scene(ROOT);
         this.CANVAS = new Canvas(screenWidth, screenHeight);
         gContext = CANVAS.getGraphicsContext2D();
         ROOT.setCenter(CANVAS);
-        STAGE.setScene(SCENE);
-        STAGE.setTitle(NAME + " " + VERSION);
-
-        setDeveloperModeEnabled(Boolean.parseBoolean(PROPERTIES.get("game.defaults.devmode")));
     }
 
     @Override
     public void start(Stage stage) {
         this.STAGE = stage;
+        STAGE.setScene(SCENE);
+        STAGE.setTitle(NAME + " " + VERSION);
+
+        setDeveloperModeEnabled(Boolean.parseBoolean(PROPERTIES.get("game.defaults.devmode")));
 
         info = new Text(5, 15, "Loading...");
         info.setFill(Color.WHITE);
@@ -89,6 +93,7 @@ public class Game extends Application {
         entityRegistry = new EntityRegistry(this);
         aiRegistry = new AIRegistry(this);
 
+        background = new Background(this);
 //        Sprite background = new Sprite(this, "background/background.png");
 //        background.position.set(400, 300);
 
@@ -119,13 +124,13 @@ public class Game extends Application {
                 }
 
                 gContext.save();
-                gContext.setFill(Color.rgb(40, 35, 35, 1));
-                gContext.fillRect(0, 0, getScreenWidth(), getScreenHeight());
-                gContext.restore();
 
+                background.update();
                 inputManager.update();
                 entityRegistry.update();
                 aiRegistry.update();
+
+                gContext.restore();
 
             }
         };
