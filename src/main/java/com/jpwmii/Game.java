@@ -4,7 +4,6 @@ import com.jpwmii.ai.AI;
 import com.jpwmii.entities.Ship;
 import com.jpwmii.registers.AIRegistry;
 import com.jpwmii.registers.EntityRegistry;
-import com.jpwmii.utils.Sprite;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,10 +21,14 @@ import java.util.Properties;
 
 public class Game extends Application {
 
-    final private HashMap<String, String> properties = loadProperties("config.properties");
-    private double screenWidth = 800;
-    private double screenHeight = 600;
-    private final String NAME = "JPWMII_9";
+    private final String NAME;
+    private final String VERSION;
+    private final BorderPane ROOT;
+    private final Canvas CANVAS;
+    final private HashMap<String, String> PROPERTIES;
+
+    private double screenWidth;
+    private double screenHeight;
     private boolean developerMode;
 
     public InputManager inputManager;
@@ -34,38 +37,48 @@ public class Game extends Application {
     private AIRegistry aiRegistry;
     private int points;
     private Text info;
+
     //FPS
     private final long[] frameTimes = new long[100];
     private int frameTimeIndex = 0 ;
     private boolean arrayFilled = false;
-    private Stage stage;
-    private GraphicsContext gContext;
+    private Stage STAGE;
+    private final GraphicsContext gContext;
     private Ship ship;
+
+    public Game() {
+        PROPERTIES = loadProperties("config.properties");
+        NAME = PROPERTIES.get("game.name");
+        VERSION = PROPERTIES.get("game.version");
+        screenWidth = Double.parseDouble(PROPERTIES.get("game.defaults.screen.width"));
+        screenHeight = Double.parseDouble(PROPERTIES.get("game.defaults.screen.height"));
+
+        this.ROOT = new BorderPane();
+        Scene SCENE = new Scene(ROOT);
+        this.CANVAS = new Canvas(screenWidth, screenHeight);
+        gContext = CANVAS.getGraphicsContext2D();
+        ROOT.setCenter(CANVAS);
+        STAGE.setScene(SCENE);
+        STAGE.setTitle(NAME + " " + VERSION);
+
+        setDeveloperModeEnabled(Boolean.parseBoolean(PROPERTIES.get("game.defaults.devmode")));
+    }
 
     @Override
     public void start(Stage stage) {
-        BorderPane root = new BorderPane();
-        Scene scene = new Scene(root);
-        this.stage = stage;
-        stage.setScene(scene);
-        Canvas canvas = new Canvas(screenWidth, screenHeight);
-        gContext = canvas.getGraphicsContext2D();
-        root.setCenter(canvas);
-        stage.setTitle(NAME + " " + properties.get("game.version"));
-
-        setDeveloperModeEnabled(false);
+        this.STAGE = stage;
 
         info = new Text(5, 15, "Loading...");
         info.setFill(Color.WHITE);
-        root.getChildren().add(info);
+        ROOT.getChildren().add(info);
 
-        root.widthProperty().addListener((obs, oldValue, newValue) -> {
-            canvas.setWidth(newValue.doubleValue());
+        ROOT.widthProperty().addListener((obs, oldValue, newValue) -> {
+            CANVAS.setWidth(newValue.doubleValue());
             setScreenWidth(newValue.doubleValue());
         });
 
-        root.heightProperty().addListener((obs, oldValue, newValue) -> {
-            canvas.setHeight(newValue.doubleValue());
+        ROOT.heightProperty().addListener((obs, oldValue, newValue) -> {
+            CANVAS.setHeight(newValue.doubleValue());
             setScreenHeight(newValue.doubleValue());
         });
 
@@ -76,8 +89,8 @@ public class Game extends Application {
         entityRegistry = new EntityRegistry(this);
         aiRegistry = new AIRegistry(this);
 
-        Sprite background = new Sprite(this, "background/background.png");
-        background.position.set(400, 300);
+//        Sprite background = new Sprite(this, "background/background.png");
+//        background.position.set(400, 300);
 
         createNewPlayer();
         createNewEnemy();
@@ -98,9 +111,9 @@ public class Game extends Application {
                     double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame;
                     info.setText(String.format(
                             """
-                                    %d points
-                                    %d / %d HP
-                                    %.3f FPS
+                            %d points
+                            %d / %d HP
+                            %.3f FPS
                             """,
                             points, ship.getHealth(), ship.getHealthMax(), frameRate));
                 }
@@ -139,9 +152,9 @@ public class Game extends Application {
     public void setDeveloperModeEnabled(boolean devModeEnabled) {
         this.developerMode = devModeEnabled;
         if(developerMode)
-            stage.setTitle(NAME + " " + properties.get("game.version") + " | developer mode");
+            STAGE.setTitle(NAME + " " + VERSION + " | developer mode");
         else
-            stage.setTitle(NAME + " " + properties.get("game.version"));
+            STAGE.setTitle(NAME + " " + VERSION);
     }
 
     public boolean isDeveloperModeEnabled() {
@@ -170,7 +183,7 @@ public class Game extends Application {
     }
 
     public Stage getStage() {
-        return this.stage;
+        return this.STAGE;
     }
 
     public double getScreenWidth() {
