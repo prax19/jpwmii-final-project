@@ -15,10 +15,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.Properties;
 
 public class Game extends Application {
 
+    final private HashMap<String, String> properties = loadProperties("config.properties");
     private double screenWidth = 800;
     private double screenHeight = 600;
     private final String NAME = "JPWMII_9";
@@ -36,12 +40,10 @@ public class Game extends Application {
     private boolean arrayFilled = false;
     private Stage stage;
     private GraphicsContext gContext;
-
     private Ship ship;
 
     @Override
     public void start(Stage stage) {
-
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root);
         this.stage = stage;
@@ -49,7 +51,7 @@ public class Game extends Application {
         Canvas canvas = new Canvas(screenWidth, screenHeight);
         gContext = canvas.getGraphicsContext2D();
         root.setCenter(canvas);
-        stage.setTitle(NAME);
+        stage.setTitle(NAME + " " + properties.get("game.version"));
 
         setDeveloperModeEnabled(false);
 
@@ -95,9 +97,11 @@ public class Game extends Application {
                     long elapsedNanosPerFrame = elapsedNanos / frameTimes.length;
                     double frameRate = 1_000_000_000.0 / elapsedNanosPerFrame;
                     info.setText(String.format(
-                            "%d points\n" +
-                                    "%d / %d HP\n" +
-                                    "%.3f FPS\n",
+                            """
+                                    %d points
+                                    %d / %d HP
+                                    %.3f FPS
+                            """,
                             points, ship.getHealth(), ship.getHealthMax(), frameRate));
                 }
 
@@ -135,13 +139,26 @@ public class Game extends Application {
     public void setDeveloperModeEnabled(boolean devModeEnabled) {
         this.developerMode = devModeEnabled;
         if(developerMode)
-            stage.setTitle(NAME + " | developer mode");
+            stage.setTitle(NAME + " " + properties.get("game.version") + " | developer mode");
         else
-            stage.setTitle(NAME);
+            stage.setTitle(NAME + " " + properties.get("game.version"));
     }
 
     public boolean isDeveloperModeEnabled() {
         return developerMode;
+    }
+
+    private HashMap<String, String> loadProperties(String fileName) {
+        HashMap<String, String> outputProperties = new HashMap<>();
+        try {
+            final Properties properties = new Properties();
+            properties.load(this.getClass().getClassLoader().getResourceAsStream(fileName));
+            for(Object key: properties.keySet())
+                outputProperties.put(key.toString(), properties.getProperty(key.toString()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return outputProperties;
     }
 
     public static void main(String[] args) {
