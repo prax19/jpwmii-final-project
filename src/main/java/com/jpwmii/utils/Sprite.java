@@ -67,8 +67,34 @@ public class Sprite {
         setCurrentImageIndex(index);
     }
 
+    public void nextImageIndex() {
+        if(hasNextImageIndex())
+            currentImage++;
+    }
+
+    public void previousImageIndex() {
+        if(hasPreviousImageIndex())
+            currentImage--;
+    }
+
+    public boolean hasNextImageIndex() {
+        return currentImage < images.size() - 1;
+    }
+
+    public boolean hasPreviousImageIndex() {
+        return currentImage > 0;
+    }
+
     public int getCurrentImageIndex() {
         return this.currentImage;
+    }
+
+    public int getMinImageIndex() {
+        return 0;
+    }
+
+    public int getMaxImageIndex() {
+        return images.size() - 1;
     }
 
     public Image getCurrentImage() {

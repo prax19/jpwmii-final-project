@@ -43,6 +43,7 @@ public class Game extends Application {
     private final long[] frameTimes = new long[100];
     private int frameTimeIndex = 0 ;
     private boolean arrayFilled = false;
+    private int animationTime;
     private Stage STAGE;
     private Scene SCENE;
     private final GraphicsContext gContext;
@@ -62,6 +63,8 @@ public class Game extends Application {
         this.CANVAS = new Canvas(screenWidth, screenHeight);
         gContext = CANVAS.getGraphicsContext2D();
         ROOT.setCenter(CANVAS);
+
+        animationTime = 0;
     }
 
     @Override
@@ -76,14 +79,18 @@ public class Game extends Application {
         info.setFill(Color.WHITE);
         ROOT.getChildren().add(info);
 
+        background = new Background(this);
+
         ROOT.widthProperty().addListener((obs, oldValue, newValue) -> {
             CANVAS.setWidth(newValue.doubleValue());
             setScreenWidth(newValue.doubleValue());
+            background.compose();
         });
 
         ROOT.heightProperty().addListener((obs, oldValue, newValue) -> {
             CANVAS.setHeight(newValue.doubleValue());
             setScreenHeight(newValue.doubleValue());
+            background.compose();
         });
 
         inputManager = new InputManager(this);
@@ -92,8 +99,6 @@ public class Game extends Application {
 
         entityRegistry = new EntityRegistry(this);
         aiRegistry = new AIRegistry(this);
-
-        background = new Background(this);
 //        Sprite background = new Sprite(this, "background/background.png");
 //        background.position.set(400, 300);
 
@@ -130,6 +135,9 @@ public class Game extends Application {
                 entityRegistry.update();
                 aiRegistry.update();
 
+                animationTime++;
+                if(animationTime == 60)
+                    animationTime = 0;
                 gContext.restore();
 
             }
@@ -213,5 +221,9 @@ public class Game extends Application {
 
     public Ship getPlayersShip() {
         return ship;
+    }
+
+    public int getAnimationTime() {
+        return animationTime;
     }
 }

@@ -9,11 +9,11 @@ Przekreślony tekst reprezentuje wykonane elementu zadania. Po spełnieniu wszys
 - [x] Komponent multimedialny korzystający z zasobów - grafika,dźwięk (zasoby umieszczone w pliku jar).
 - [x] Uruchamianie aplikacji z pliku JAR (pliku uruchomieniowego)
 2. **Generowanie i przekształcanie obrazu**
-- [ ] ~~Kopiowanie fragmentów obrazu~~, tło (animacje w tle), ~~elementy gry (np. elementy stałe, przeszkody, postaci) - wycinanie i wklejanie fragmentów obrazów.~~
+- [x] Kopiowanie fragmentów obrazu, tło (animacje w tle), elementy gry (np. elementy stałe, przeszkody, postaci) - wycinanie i wklejanie fragmentów obrazów.
 - [x] Metody rysowania grafiki np. teksty, linie, kształty geometryczne, wypełnianie obszarów
 3. **Animacje**
 - [x] Animacja z użyciem Timera Swing. Zmiana położenia, skali, orientacji obiektów graficznych
-- [ ] Zmiana klatek animacji - animacja postaci, elementów gry, elementów tła
+- [x] Zmiana klatek animacji - animacja postaci, elementów gry, elementów tła
 4. **Interakcja z użytkownikiem**
 - [x] Interakcja z użytkownikiem (mysz, klawiatura)  
 - [ ] Dźwięki tła i zdarzeń  (zasoby w pliku uruchomieniowym - jeżeli technologia pozwala).
@@ -22,15 +22,6 @@ Przekreślony tekst reprezentuje wykonane elementu zadania. Po spełnieniu wszys
 generowanie obiektów na scenie.
 
 ## TODO
-- ### Tło z animacją
-  - tło składające się z wielu animowanych elementów (np. gwiazd, planet, meteoryty w oddali)
-  - elementy w tle rozmieszczone losowo na ekranie
-  - kolor wypełnienia: czarny
-  - poruszające się elementy w tle (meteoryty)
-    - nie zadają obrażeń
-    - nie można ich trafić
-    - mogą zmieniać pozycję, zwrot, wielkość
-    - muszą w jakiś sposób odróżniać się od meteorytów na na pierwszym planie
 - ### Animacje elementów gry
   - Animacja wystrzału pocisku
   - Animacja zniszczania pocisku
