@@ -2,7 +2,7 @@ package com.jpwmii.background;
 
 import com.jpwmii.Game;
 import com.jpwmii.background.entities.DistantStar;
-import com.jpwmii.registers.EntityRegistry;
+import com.jpwmii.registers.BackgroundEntityRegistry;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -10,12 +10,12 @@ import java.util.Random;
 
 public class Background {
 
-    private Game context;
-    private EntityRegistry bgEntityReigstry;
+    private final Game context;
+    private final BackgroundEntityRegistry bgEntityReigstry;
 
     public Background(Game context) {
         this.context = context;
-        bgEntityReigstry = new EntityRegistry(context);
+        bgEntityReigstry = new BackgroundEntityRegistry(context);
         compose();
     }
 

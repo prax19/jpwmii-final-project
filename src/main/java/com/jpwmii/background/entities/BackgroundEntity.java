@@ -10,4 +10,9 @@ public abstract class BackgroundEntity extends Entity {
         super(context, name, healthMax, sprite);
     }
 
+    @Override
+    public void update(double deltaTime) {
+        getSprite().update(deltaTime);
+    }
+
 }

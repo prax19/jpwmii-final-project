@@ -16,21 +16,7 @@ public class EntityRegistry extends Registry<Entity>{
     public void update() {
         for(int i = 0; i < this.size(); i++) {
             Entity entity = this.get(i);
-            for(Entity entity2: this)
-                if(     !Objects.equals(entity, entity2) &&
-                        entity.hasCollisionWith(entity2))  {
-                    if(!(entity instanceof Bullet)) {
-                        if(entity2 instanceof Bullet) {
-                            if (((Bullet) entity2).getSource() != entity) {
-                                entity.collide(entity2);
-                                entity2.collide(entity);
-                            }
-                        } else {
-                            entity.collide(entity2);
-                            entity2.collide(entity);
-                        }
-                    }
-                }
+            detectCollisions(entity);
 
             entity.update(1/60.0);
             entity.render(getContext().getGraphicsContext());
@@ -38,5 +24,23 @@ public class EntityRegistry extends Registry<Entity>{
                 this.unregister(entity);
             }
         }
+    }
+
+    public void detectCollisions(Entity entity) {
+        for(Entity entity2: this)
+            if(     !Objects.equals(entity, entity2) &&
+                    entity.hasCollisionWith(entity2))  {
+                if(!(entity instanceof Bullet)) {
+                    if(entity2 instanceof Bullet) {
+                        if (((Bullet) entity2).getSource() != entity) {
+                            entity.collide(entity2);
+                            entity2.collide(entity);
+                        }
+                    } else {
+                        entity.collide(entity2);
+                        entity2.collide(entity);
+                    }
+                }
+            }
     }
 }

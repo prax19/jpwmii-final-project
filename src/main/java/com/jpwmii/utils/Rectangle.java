@@ -27,6 +27,14 @@ public class Rectangle {
         this.height = h;
     }
 
+    public double getWidth() {
+        return x;
+    }
+
+    public double getHeight() {
+        return y;
+    }
+
     public boolean overlaps(Rectangle other) {
         boolean noOverlap = this.x + this.width < other.x ||
                 other.x + other.width < this.x ||

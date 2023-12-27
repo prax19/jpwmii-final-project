@@ -9,7 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Entity {
 
-    private Game context;
+    private final Game context;
     private String name;
     private int health;
     private int healthMax;
@@ -35,17 +35,17 @@ public abstract class Entity {
 
     }
 
-    public void moveForward(boolean hold) {};
+    public void moveForward(boolean hold) {}
 
-    public void moveBack(boolean hold) {};
+    public void moveBack(boolean hold) {}
 
-    public void moveLeft(boolean hold) {};
+    public void moveLeft(boolean hold) {}
 
-    public void moveRight(boolean hold) {};
+    public void moveRight(boolean hold) {}
 
-    public void rotateLeft(boolean hold) {};
+    public void rotateLeft(boolean hold) {}
 
-    public void rotateRight(boolean hold) {};
+    public void rotateRight(boolean hold) {}
 
     public void collide(Entity entity) {
         if(entity instanceof Bullet) {
@@ -156,8 +156,9 @@ public abstract class Entity {
         this.detectScreenLeaving();
     }
 
-    public void render(GraphicsContext context) {
-        sprite.render(context);
+    public void render(GraphicsContext gContext) {
+        sprite.render(gContext);
+
     }
 
     public String getName() {
@@ -202,10 +203,6 @@ public abstract class Entity {
 
     public void setHitboxOffset(double x, double y) {
         sprite.getHitbox().setPosition(x, y);
-    }
-
-    public void setContext(Game context) {
-        this.context = context;
     }
 
     public Game getContext() {
