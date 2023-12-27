@@ -7,7 +7,7 @@ import com.jpwmii.utils.enums.Direction;
 public class Bullet extends Entity {
 
     private boolean fired;
-    private Entity source;
+    private final Entity source;
     public Bullet(Game context, Entity source) {
         super(
                 context,
@@ -18,7 +18,7 @@ public class Bullet extends Entity {
                         "entities/bullet/bullet.png")
         );
         setHitboxSize(3, 3);
-        setSource(source);
+        this.source = source;
         this.fired = false;
     }
 
@@ -70,10 +70,6 @@ public class Bullet extends Entity {
 
     public boolean isFired() {
         return fired;
-    }
-
-    public void setSource(Entity entity) {
-        this.source = entity;
     }
 
     public Entity getSource() {

@@ -8,8 +8,8 @@ import java.util.List;
 
 public abstract class Registry<T> implements Iterable<T> {
 
-    private List<T> registry;
-    private Game context;
+    private final List<T> registry;
+    private final Game context;
 
     public Registry(Game context) {
         this.context = context;
@@ -53,9 +53,5 @@ public abstract class Registry<T> implements Iterable<T> {
 
     public Game getContext() {
         return context;
-    }
-
-    public void setContext(Game context) {
-        this.context = context;
     }
 }

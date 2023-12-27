@@ -11,11 +11,11 @@ import java.util.Random;
 
 public class Sprite {
 
-    public Game context;
+    public final Game context;
     public Vector position;
     public Vector velocity;
     public double rotation;
-    private Rectangle boundary;
+    private final Rectangle boundary;
 
     public List<Image> images;
     private int currentImage;

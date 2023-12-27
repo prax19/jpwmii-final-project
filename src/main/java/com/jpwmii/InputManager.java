@@ -2,22 +2,18 @@ package com.jpwmii;
 
 import com.jpwmii.registers.KeyClickedRegistry;
 import com.jpwmii.registers.KeyPressedRegistry;
-import javafx.event.Event;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class InputManager {
 
-    private Game context;
-    private KeyPressedRegistry keyPressedRegister;
-    private KeyClickedRegistry keyClickedRegister;
+    private final Game context;
+    private final KeyPressedRegistry keyPressedRegister;
+    private final KeyClickedRegistry keyClickedRegister;
 
     public InputManager(Game context) {
 
-        setContext(context);
+        this.context = context;
         keyPressedRegister = new KeyPressedRegistry(context);
         keyClickedRegister = new KeyClickedRegistry(context);
 
@@ -58,9 +54,5 @@ public class InputManager {
 
     public Game getContext() {
         return context;
-    }
-
-    public void setContext(Game context) {
-        this.context = context;
     }
 }
