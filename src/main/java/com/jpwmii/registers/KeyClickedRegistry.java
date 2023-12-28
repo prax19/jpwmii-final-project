@@ -1,6 +1,7 @@
 package com.jpwmii.registers;
 
 import com.jpwmii.Game;
+import com.jpwmii.entities.Entity;
 import javafx.scene.input.KeyCode;
 
 public class KeyClickedRegistry extends Registry<KeyCode>{
@@ -21,6 +22,15 @@ public class KeyClickedRegistry extends Registry<KeyCode>{
 
         if(isKeyClicked(KeyCode.O)) {
             getContext().createNewPlayer();
+        }
+
+        if(isKeyClicked(KeyCode.F)) {
+            for(Entity entity: getContext().getEntityRegistry())
+                entity.remove();
+            getContext().createNewPlayer();
+            getContext().createNewEnemy();
+            getContext().setGameStarted(true);
+
         }
 
         if(isKeyClicked(KeyCode.F3)) {

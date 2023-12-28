@@ -7,12 +7,15 @@ import com.jpwmii.registers.AIRegistry;
 import com.jpwmii.registers.EntityRegistry;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -48,6 +51,7 @@ public class Game extends Application {
     private Scene SCENE;
     private final GraphicsContext gContext;
     private Ship ship;
+    private boolean gameStarted;
 
     private Background background;
 
@@ -64,6 +68,7 @@ public class Game extends Application {
         gContext = CANVAS.getGraphicsContext2D();
         ROOT.setCenter(CANVAS);
 
+        gameStarted = false;
         animationTime = 0;
     }
 
@@ -79,17 +84,26 @@ public class Game extends Application {
         info.setFill(Color.WHITE);
         ROOT.getChildren().add(info);
 
+        Text info2 = new Text( screenWidth / 2 - 50, screenHeight / 2, "Press F to start the game");
+        info2.setFill(Color.WHITE);
+        info2.setTextAlignment(TextAlignment.CENTER);
+        StackPane.setAlignment(info2, Pos.CENTER);
+        info2.setVisible(true);
+        ROOT.getChildren().add(info2);
+
         background = new Background(this);
 
         ROOT.widthProperty().addListener((obs, oldValue, newValue) -> {
             CANVAS.setWidth(newValue.doubleValue());
             setScreenWidth(newValue.doubleValue());
+            info2.setX(screenWidth / 2 - 50);
             background.compose();
         });
 
         ROOT.heightProperty().addListener((obs, oldValue, newValue) -> {
             CANVAS.setHeight(newValue.doubleValue());
             setScreenHeight(newValue.doubleValue());
+            info2.setY(screenHeight / 2);
             background.compose();
         });
 
@@ -124,14 +138,33 @@ public class Game extends Application {
                             """,
                             ship.getScore(), ship.getHealth(), ship.getHealthMax(), frameRate));
                 }
+                if(ship.isDestroyed()) {
+                    gameStarted = false;
+                    info2.setText(String.format("""
+                            Press F to start the game\n
+                            Your score: %d
+                            """,
+                            ship.getScore()
+                    ));
+                }
+                info2.setVisible(!isGameStarted());
 
                 // Random enemy generation
-                // Max: 3
-                // 20% for spawn new enemy every second
-                if(animationTime == 30) {
+                // Max: 2
+                //Every second:
+                // 5% chance of spawning new enemy
+                // 15% chance of healing
+                // 5% chance of health bonus
+                if(animationTime == 30 && gameStarted) {
                     int randomNumber = new Random().nextInt(100);
-                    if (randomNumber >= 0 && randomNumber <= 20 && aiRegistry.size() < 3)
+                    if (randomNumber >= 0 && randomNumber <= 5 && aiRegistry.size() < 2)
                         createNewEnemy();
+                    if(randomNumber >= 0 && randomNumber <= 15 && !ship.isDestroyed() && ship.getHealth() < ship.getHealthMax()) {
+                        ship.heal(5);
+                        if(randomNumber >= 10 && randomNumber <= 15)
+                            ship.heal(20);
+                    }
+
                 }
 
                 gContext.save();
@@ -182,7 +215,7 @@ public class Game extends Application {
     public void createNewPlayer() {
         if(Objects.nonNull(ship))
             ship.remove();
-        ship = new Ship(this, 100, 100, "Ship_player");
+        ship = new Ship(this, this.screenWidth / 2, this.screenHeight / 2, "Ship_player");
         entityRegistry.register(ship);
     }
 
@@ -249,5 +282,13 @@ public class Game extends Application {
 
     public int getAnimationTime() {
         return animationTime;
+    }
+
+    public void setGameStarted(boolean isStarted) {
+        gameStarted = isStarted;
+    }
+
+    public boolean isGameStarted() {
+        return gameStarted;
     }
 }

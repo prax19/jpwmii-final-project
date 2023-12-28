@@ -169,6 +169,15 @@ public abstract class Entity {
         this.name = name;
     }
 
+    public void heal(int hp) {
+        if(hp < 0)
+            throw new IllegalArgumentException("Wrong hp value");
+        if(health + hp < healthMax)
+            health = health + hp;
+        else
+            health = healthMax;
+    }
+
     public int getHealth() {
         return health;
     }
