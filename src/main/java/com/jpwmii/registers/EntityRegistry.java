@@ -3,6 +3,7 @@ package com.jpwmii.registers;
 import com.jpwmii.Game;
 import com.jpwmii.entities.Bullet;
 import com.jpwmii.entities.Entity;
+import com.jpwmii.entities.Ship;
 
 import java.util.Objects;
 
@@ -32,9 +33,11 @@ public class EntityRegistry extends Registry<Entity>{
                     entity.hasCollisionWith(entity2))  {
                 if(!(entity instanceof Bullet)) {
                     if(entity2 instanceof Bullet) {
-                        if (((Bullet) entity2).getSource() != entity) {
+                        if (((Bullet) entity2).getSource() != entity && !entity.isDestroyed()) {
                             entity.collide(entity2);
                             entity2.collide(entity);
+                            if(entity.isDestroyed())
+                                ((Ship)((Bullet) entity2).getSource()).score(10);
                         }
                     } else {
                         entity.collide(entity2);

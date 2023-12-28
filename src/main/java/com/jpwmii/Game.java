@@ -36,7 +36,6 @@ public class Game extends Application {
 
     private EntityRegistry entityRegistry;
     private AIRegistry aiRegistry;
-    private int points;
     private Text info;
 
     //FPS
@@ -95,8 +94,6 @@ public class Game extends Application {
 
         inputManager = new InputManager(this);
 
-        points = 0;
-
         entityRegistry = new EntityRegistry(this);
         aiRegistry = new AIRegistry(this);
 //        Sprite background = new Sprite(this, "background/background.png");
@@ -125,7 +122,7 @@ public class Game extends Application {
                             %d / %d HP
                             %.3f FPS
                             """,
-                            points, ship.getHealth(), ship.getHealthMax(), frameRate));
+                            ship.getScore(), ship.getHealth(), ship.getHealthMax(), frameRate));
                 }
 
                 gContext.save();

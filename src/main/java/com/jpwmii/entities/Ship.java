@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Ship extends Entity {
 
+    private int score;
     private int fireDelay = 0;
     private double rotationSpeed = 0;
 
@@ -30,6 +31,7 @@ public class Ship extends Entity {
                         "entities/ship/ship_w3.png"
                 )
         );
+        this.score = 0;
         setHitboxSize(10, 10);
     }
 
@@ -158,4 +160,15 @@ public class Ship extends Entity {
         super.onScreenLeaving(direction);
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void score(int points) {
+        this.score += points;
+    }
 }
