@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Random;
 
 public class Game extends Application {
 
@@ -100,7 +101,6 @@ public class Game extends Application {
 //        background.position.set(400, 300);
 
         createNewPlayer();
-        createNewEnemy();
 
         AnimationTimer gameLoop = new AnimationTimer() {
             @Override
@@ -125,6 +125,15 @@ public class Game extends Application {
                             ship.getScore(), ship.getHealth(), ship.getHealthMax(), frameRate));
                 }
 
+                // Random enemy generation
+                // Max: 3
+                // 20% for spawn new enemy every second
+                if(animationTime == 30) {
+                    int randomNumber = new Random().nextInt(100);
+                    if (randomNumber >= 0 && randomNumber <= 20 && aiRegistry.size() < 3)
+                        createNewEnemy();
+                }
+
                 gContext.save();
 
                 background.update();
@@ -146,7 +155,25 @@ public class Game extends Application {
     }
 
     public void createNewEnemy() {
-        Ship ship = new Ship(this, 200, 200, "Ship_enemy");
+        Ship ship = new Ship(this, 0, 0, "Ship_enemy");
+        if(new Random().nextBoolean()) {
+            ship.getPosition().y = new Random().nextInt((int)this.getScreenHeight());
+            if(new Random().nextBoolean()) {
+                ship.getPosition().x = 0;
+            } else {
+                ship.getPosition().x = this.getScreenWidth();
+                ship.setRotation(180);
+            }
+        } else {
+            ship.getPosition().x = new Random().nextInt((int)this.getScreenWidth());
+            if(new Random().nextBoolean()) {
+                ship.getPosition().y = 0;
+                ship.setRotation(90);
+            } else {
+                ship.getPosition().y = this.getScreenHeight();
+                ship.setRotation(270);
+            }
+        }
         AI ai = new AI(ship);
         aiRegistry.register(ai);
         entityRegistry.register(ship);
