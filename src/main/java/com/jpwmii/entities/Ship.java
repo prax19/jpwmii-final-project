@@ -32,7 +32,7 @@ public class Ship extends Entity {
                 )
         );
         this.score = 0;
-        setHitboxSize(10, 10);
+        setHitboxSize(24, 24);
     }
 
     public Ship(

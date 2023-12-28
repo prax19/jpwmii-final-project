@@ -21,6 +21,9 @@ Przekreślony tekst reprezentuje wykonane elementu zadania. Po spełnieniu wszys
 - [ ] ~~Interakcja elementów sceny, kolizje, sterowanie elementami gry, proste AI,~~ generowanie poziomów,
 generowanie obiektów na scenie.
 
+## Współautorzy
+- Filip Mędrala - tekstura statku, testowanie, konsultacje
+
 ## TODO
 - ### Animacje elementów gry
   - Animacja wystrzału pocisku
