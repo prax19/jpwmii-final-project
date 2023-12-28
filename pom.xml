@@ -5,8 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jpwmii</groupId>
-    <artifactId>JPWMII_Final</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <artifactId>JPWMII_9</artifactId>
+    <version>0.1.1-SNAPSHOT</version>
+    <name>JPWMII Final Project</name>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
@@ -14,6 +15,7 @@
         <javafx.version>11.0.2</javafx.version>
         <javafx.meaven.plugin.version>0.0.8</javafx.meaven.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
     </properties>
 
     <dependencies>
