@@ -27,7 +27,7 @@ public class Background {
     }
 
     public void compose() {
-        int starCount = (int) (context.getScreenWidth() * context.getScreenWidth() / 20000);
+        int starCount = (int) (context.getScreenWidth() * context.getScreenHeight() / 10000);
         bgEntityReigstry.clear();
         for(int i = 0; i < starCount; i++)
             createNewDistantStar(
