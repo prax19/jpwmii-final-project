@@ -25,6 +25,7 @@ public class KeyClickedRegistry extends Registry<KeyCode>{
         }
 
         if(isKeyClicked(KeyCode.F)) {
+            getContext().getPlayersShip().setPosition(0, 0);
             for(Entity entity: getContext().getEntityRegistry())
                 entity.remove();
             getContext().createNewPlayer();
