@@ -227,7 +227,7 @@ public abstract class Entity {
         if(Objects.nonNull(audioEffect))
             return audioEffect;
         else
-            throw new NoSuchFieldException("AudioEffect not specitied for this entity.");
+            throw new NoSuchFieldException("AudioEffect not specified for this entity.");
     }
 
     public void setAudioEffect(AudioEffect audioEffect) {
