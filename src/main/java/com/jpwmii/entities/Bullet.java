@@ -46,7 +46,7 @@ public class Bullet extends Entity {
     @Override
     public void moveForward(boolean hold) {
         if(hold) {
-            getVelocity().setLength(500);
+            getVelocity().setLength(750);
             getVelocity().setAngle(getSprite().rotation);
         }
         else

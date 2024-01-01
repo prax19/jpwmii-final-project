@@ -49,9 +49,9 @@ public abstract class Entity {
 
     public void collide(Entity entity) {
         if(entity instanceof Bullet) {
-            damage(10);
+            damage(5);
         } else if (entity instanceof Ship) {
-            damage(50);
+            damage(40);
         }
     }
 

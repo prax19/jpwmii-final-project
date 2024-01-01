@@ -6,9 +6,6 @@ import com.jpwmii.utils.enums.Direction;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Ship extends Entity {
 
     private int score;
@@ -119,7 +116,7 @@ public class Ship extends Entity {
                     this.getPosition().y);
             bullet.setRotation(this.getRotation());
             getContext().getEntityRegistry().register(bullet);
-            fireDelay = 4;
+            fireDelay = 1;
             bullet.fire();
         } else {
             fireDelay--;
