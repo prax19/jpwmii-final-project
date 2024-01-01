@@ -56,7 +56,7 @@ public class Ship extends Entity {
         double velocity = getVelocity().getLength();
         if(!isDestroyed())
             if(hold) {
-                if(velocity < 200)
+                if(velocity < 250)
                     velocity = velocity + 1;
                 getVelocity().setLength(velocity);
                 getVelocity().setAngle(this.getSprite().rotation);
