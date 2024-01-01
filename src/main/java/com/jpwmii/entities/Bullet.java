@@ -1,6 +1,7 @@
 package com.jpwmii.entities;
 
 import com.jpwmii.Game;
+import com.jpwmii.utils.AudioEffect;
 import com.jpwmii.utils.Sprite;
 import com.jpwmii.utils.enums.Direction;
 
@@ -15,7 +16,10 @@ public class Bullet extends Entity {
                 100,
                 new Sprite(
                         context,
-                        "entities/bullet/bullet.png")
+                        "entities/bullet/bullet.png"),
+                new AudioEffect(
+                        "entities/bullet/fire.wav"
+                )
         );
         setHitboxSize(3, 3);
         this.source = source;
@@ -34,6 +38,7 @@ public class Bullet extends Entity {
 
     public void fire() {
         this.fired = true;
+        this.audioEffect.play();
         moveForward(true);
     }
 

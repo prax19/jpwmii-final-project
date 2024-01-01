@@ -48,7 +48,7 @@ public class Game extends Application {
     private boolean arrayFilled = false;
     private int animationTime;
     private Stage STAGE;
-    private Scene SCENE;
+    private final Scene SCENE;
     private final GraphicsContext gContext;
     private Ship ship;
     private boolean gameStarted;
@@ -141,7 +141,7 @@ public class Game extends Application {
                 if(ship.isDestroyed()) {
                     gameStarted = false;
                     info2.setText(String.format("""
-                            Press F to start the game\n
+                            Press F to start the game
                             Your score: %d
                             """,
                             ship.getScore()

@@ -1,11 +1,14 @@
 package com.jpwmii.entities;
 
 import com.jpwmii.Game;
+import com.jpwmii.utils.AudioEffect;
 import com.jpwmii.utils.Rectangle;
 import com.jpwmii.utils.Sprite;
 import com.jpwmii.utils.Vector;
 import com.jpwmii.utils.enums.Direction;
 import javafx.scene.canvas.GraphicsContext;
+
+import java.util.Objects;
 
 public abstract class Entity {
 
@@ -14,9 +17,8 @@ public abstract class Entity {
     private int health;
     private int healthMax;
     private Sprite sprite;
-
+    protected AudioEffect audioEffect;
     private boolean destroyed;
-
     private boolean removed;
 
     public Entity(
@@ -29,6 +31,25 @@ public abstract class Entity {
         setHealth(healthMax);
         setHealthMax(health);
         setSprite(sprite);
+        this.audioEffect = null;
+        this.destroyed = false;
+        this.removed = false;
+        this.context = context;
+
+    }
+
+    public Entity(
+            Game context,
+            String name,
+            int healthMax,
+            Sprite sprite,
+            AudioEffect audioEffect
+    ) {
+        setName(name);
+        setHealth(healthMax);
+        setHealthMax(health);
+        setSprite(sprite);
+        setAudioEffect(audioEffect);
         this.destroyed = false;
         this.removed = false;
         this.context = context;
@@ -200,6 +221,17 @@ public abstract class Entity {
 
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
+    }
+
+    public AudioEffect getAudioEffect() throws NoSuchFieldException {
+        if(Objects.nonNull(audioEffect))
+            return audioEffect;
+        else
+            throw new NoSuchFieldException("AudioEffect not specified for this entity.");
+    }
+
+    public void setAudioEffect(AudioEffect audioEffect) {
+        this.audioEffect = audioEffect;
     }
 
     public Rectangle getHitbox() {
