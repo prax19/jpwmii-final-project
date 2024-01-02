@@ -79,10 +79,13 @@ public class Ship extends Entity {
     public void rotateLeft(boolean hold) {
         if(hold && !isDestroyed()) {
             if( rotationSpeed > -2)
-                rotationSpeed -= 0.1;
+                rotationSpeed -= 0.2;
         } else {
-            if(rotationSpeed < 0 && !isDestroyed())
-                rotationSpeed += 0.2;
+            if(rotationSpeed < 0 && !isDestroyed()) {
+                rotationSpeed += 0.01;
+                rotationSpeed = Math.round(rotationSpeed * 100) / 100;
+            }
+
         }
         getSprite().rotate(rotationSpeed);
     }
@@ -91,10 +94,12 @@ public class Ship extends Entity {
     public void rotateRight(boolean hold) {
         if(hold && !isDestroyed()) {
             if( rotationSpeed < 2)
-                rotationSpeed += 0.1;
+                rotationSpeed += 0.2;
         } else {
-            if (rotationSpeed > 0 && !isDestroyed())
-                rotationSpeed -= 0.2;
+            if (rotationSpeed > 0 && !isDestroyed()) {
+                rotationSpeed -= 0.01;
+                rotationSpeed = Math.round(rotationSpeed * 100) / 100;
+            }
         }
         getSprite().rotate(rotationSpeed);
     }
