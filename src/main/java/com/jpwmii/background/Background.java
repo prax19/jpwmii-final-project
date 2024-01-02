@@ -3,6 +3,7 @@ package com.jpwmii.background;
 import com.jpwmii.Game;
 import com.jpwmii.background.entities.DistantStar;
 import com.jpwmii.registers.BackgroundEntityRegistry;
+import com.jpwmii.utils.AudioEffect;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -12,11 +13,15 @@ public class Background {
 
     private final Game context;
     private final BackgroundEntityRegistry bgEntityReigstry;
+    private final AudioEffect music;
 
     public Background(Game context) {
         this.context = context;
+        this.music = new AudioEffect("background/nas_ne_dogonyat.wav");
         bgEntityReigstry = new BackgroundEntityRegistry(context);
         compose();
+        music.loop();
+        music.setVolume(0.25f);
     }
 
     public void createNewDistantStar(double x, double y) {
@@ -45,4 +50,7 @@ public class Background {
         gContext.fillRect(0, 0, context.getScreenWidth(), context.getScreenHeight());
     }
 
+    public AudioEffect getMusic() {
+        return music;
+    }
 }

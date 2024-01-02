@@ -37,6 +37,16 @@ public class AudioEffect {
         getCurrentClip().start();
     }
 
+    public void loop() {
+        getCurrentClip().loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    public void setVolume(float volume) {
+        Clip clip = getCurrentClip();
+        FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        control.setValue(20f * (float) Math.log10(volume));
+    }
+
     public Clip getCurrentClip() {
         return clips.get(currentSound);
     }
