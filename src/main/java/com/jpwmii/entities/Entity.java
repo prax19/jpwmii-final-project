@@ -174,6 +174,8 @@ public abstract class Entity {
 
     public void update(double deltaTime) {
         sprite.update(deltaTime);
+//        if(Objects.nonNull(audioEffect))
+//            audioEffect.update();
         this.detectScreenLeaving();
     }
 

@@ -4,6 +4,7 @@ import com.jpwmii.ai.AI;
 import com.jpwmii.background.Background;
 import com.jpwmii.entities.Ship;
 import com.jpwmii.registers.AIRegistry;
+import com.jpwmii.registers.AudioEffectRegistry;
 import com.jpwmii.registers.EntityRegistry;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -39,6 +40,7 @@ public class Game extends Application {
     public InputManager inputManager;
 
     private EntityRegistry entityRegistry;
+    private AudioEffectRegistry audioEffectRegistry;
     private AIRegistry aiRegistry;
     private Text info;
 
@@ -111,6 +113,7 @@ public class Game extends Application {
 
         entityRegistry = new EntityRegistry(this);
         aiRegistry = new AIRegistry(this);
+        audioEffectRegistry = new AudioEffectRegistry(this);
 //        Sprite background = new Sprite(this, "background/background.png");
 //        background.position.set(400, 300);
 
@@ -282,6 +285,10 @@ public class Game extends Application {
 
     public int getAnimationTime() {
         return animationTime;
+    }
+
+    public AudioEffectRegistry getAudioEffectRegistry() {
+        return audioEffectRegistry;
     }
 
     public void setGameStarted(boolean isStarted) {

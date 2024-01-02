@@ -2,10 +2,12 @@ package com.jpwmii.utils;
 
 import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AudioEffect {
 
@@ -34,6 +36,7 @@ public class AudioEffect {
     }
 
     public void play() {
+        getCurrentClip().setMicrosecondPosition(0);
         getCurrentClip().start();
     }
 
@@ -42,9 +45,14 @@ public class AudioEffect {
     }
 
     public void setVolume(float volume) {
-        Clip clip = getCurrentClip();
-        FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        control.setValue(20f * (float) Math.log10(volume));
+        for(Clip clip: this.clips) {
+            FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            control.setValue(20f * (float) Math.log10(volume));
+        }
+    }
+
+    public void update() {
+
     }
 
     public Clip getCurrentClip() {
@@ -71,6 +79,8 @@ public class AudioEffect {
 
     public void addSound(String path) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
+        if(Objects.isNull(inputStream))
+            throw new FileNotFoundException("Unable to load audio file.");
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(bufferedInputStream);
 
