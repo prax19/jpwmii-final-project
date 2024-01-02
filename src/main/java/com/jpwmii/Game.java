@@ -291,6 +291,10 @@ public class Game extends Application {
         return audioEffectRegistry;
     }
 
+    public Background getBackground() {
+        return background;
+    }
+
     public void setGameStarted(boolean isStarted) {
         gameStarted = isStarted;
     }
